@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Chat</title>
+<base href="/">
+<meta charset="UTF-8">	
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geochat</title>
+<link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type ="text/javascript">
+
+$(document).ready(function (){
+    var socket = io.connect();
+    var height = 0;
+    var name = $('#username_input').val();
+    // var name = prompt('Enter your name');
+
+    socket.emit("join", {name:name});
+    console.log('New user joined', name);
+
+
+    // $('#chat').each(function(i, value){
+    //     height += parseInt($(this).height());
+    // });
+    // height += '';
+    // $('#chat').animate({scrollTop: height});
+    function scrollSmoothToBottom() {
+        $('#chat').animate({
+            scrollTop: $('#chat').offset().top
+        }, 500);
+    }
+
+
+
+    $('#message_input').keypress(function(e) {
+        if (event.which == 13) {
+            $('#button').click();
+            return false;
+        }
+    });
+
+    $('#button').click(function (){
+        socket.emit("new_message", {name:name, message:$('#message_input').val()});
+        $('#message_input').val("");
+    });
+
+    socket.on('existing_messages', function(data){
+        for(i in data)
+            $("#chat").append("<p style='color:white'>"+data[i].name+": "+data[i].message+"</p>");
+    });
+
+    socket.on('update_messages', function(data){
+        $("#chat").append("<p style='color:white; text-align:right'>"+data.name+": "+data.message+"</p>");
+        scrollSmoothToBottom();
+    });
+
+    socket.on('user_disconnect', function(data){
+        $("#chat").append("<p style='color:red'>"+data.name+" has left the chat"+"</p>");
+    });
+
+    socket.on('display_new_user', function(data){
+        console.log('data',data.name);
+        $("#chat").append("<p style='color:green'>"+data.name+" has joined the chat"+"</p>");
+    });
+});
+
+</script>
+</head>
+<body>
+<div class='bg'>
+    <div class="container-fluid">
+
+        <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12"></div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <form action="/login" method="POST" class="form-container">
+                        <h3 class="cover-heading">Welcome to Group Think</h1><br>
+                        <div class="form-group">
+                            <label for="user">Username</label>
+                            <input type="text" id="username_input" class="form-control" name="name" placeholder="Enter your username">
+                        </div>
+                        <button type="submit" class="btn-success btn-block" id="join">Enter Chat</button>
+                    </form>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12"></div>
+            </div>
+        
+        <div id="content_wrap">
+        <div id="chat_wrapper">
+        <h3 class="cover-heading">Welcome to Group Think</h3><br><br><br>
+            <div class="col-md-4 col-sm-4 col-xs-12"></div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div id="chat"></div><br>
+                        <div class="form-group">
+                            <input id='message_input' placeholder="enter your message here">
+                            <button type="button" id='button'>Send</button>
+                            <!-- <input type="file" class="form-control-file-lg"> -->
+                        </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

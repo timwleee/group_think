@@ -1,0 +1,84 @@
+* {
+    font-family: 'Questrial', sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #333;
+}
+body {
+  color: #fff;
+}
+
+.cover-heading {
+    text-align: center;
+    color: white;
+}
+
+label {
+    color:white;
+}
+
+.bg {
+    background-image:url("/img/bright-clear-close-up-401107.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-container {
+    background-color: rgba(0,0,0,.7);
+    width: 100%;
+    border: 1px solid;
+    padding: 60px 50px;
+    margin-top: 20vh;
+    -webkit-box-shadow: 0px 3px 80px 16px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 3px 80px 16px rgba(255,255,255,1);
+    box-shadow: 0px 3px 80px 16px rgba(255,255,255,1);
+}
+
+#page2 {
+    display:none;
+}
+
+#chat {
+    background-color: rgba(0,0,0,0.7);
+    overflow:scroll;
+    height: 500px;
+    width: 100%;
+    border: 1px solid;
+    padding: 20px 50px;
+    -webkit-box-shadow: 0px 3px 80px 16px  rgba(255,255,255,1);
+    -moz-box-shadow: 0px 3px 80px 16px  rgba(255,255,255,1);
+    box-shadow: 0px 3px 80px 16px  rgba(255,255,255,1);
+}
+
+#message {
+    color: white;
+    height: 50px;
+    width: 600px;
+    border: 1px solid black;
+}
+
+#message_input {
+    width: 100%;
+}
+
+#button {
+    height: 25px;
+    width: 50px;
+    margin-top: 5px;
+    background-color: lightblue;
+}
+
+.site-wrapper {
+    display: table;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+            box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+  }
+
